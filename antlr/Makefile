@@ -3,7 +3,10 @@ GRAMMAR=calc
 
 antlr:	$(GRAMMAR).g4
 		$(ANTLR4) -Dlanguage=Cpp -no-listener -visitor $(GRAMMAR).g4
+
+compile:
 		g++ main.cpp -o $(GRAMMAR) -I/usr/local/include/antlr4-runtime -lantlr4-runtime
+	 
 
 clean:	
 	    rm -f $(GRAMMAR)BaseVisitor* $(GRAMMAR)*.interp $(GRAMMAR)Lexer* $(GRAMMAR)Parser* $(GRAMMAR)Visitor* $(GRAMMAR)*.tokens
