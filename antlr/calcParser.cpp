@@ -233,7 +233,7 @@ calcParser::ExprContext* calcParser::expr(int precedence) {
           setState(23);
           dynamic_cast<ExprContext *>(_localctx)->middle = expr(0);
           setState(24);
-          match(calcParser::T__6);
+          dynamic_cast<ExprContext *>(_localctx)->op2 = match(calcParser::T__6);
           setState(25);
           dynamic_cast<ExprContext *>(_localctx)->right = expr(3);
           break;
