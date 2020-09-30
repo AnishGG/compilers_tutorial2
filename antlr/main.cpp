@@ -5,6 +5,7 @@
 #include "calcParser.cpp"
 #include "calcVisitor.cpp"
 #include "calcBaseVisitor.h"
+#include "PostFixVisitor.h"
 
 using namespace std;
 using namespace antlr4;
@@ -12,23 +13,37 @@ using namespace antlr4;
 int main(int argc, const char* argv[]) {
     std::ifstream ins;
     ins.open(argv[1]);
-    
+
     ANTLRInputStream input(ins);
     calcLexer lexer(&input);
     CommonTokenStream tokens(&lexer);
-    /*cout << "Tokens:" << endl;
-    tokens.fill();
-    for(Token *token: tokens.getTokens()){
-        cout << token-> toString() << endl;
-    }*/
     calcParser parser(&tokens);    
     parser.setBuildParseTree(true);
 
-    /*tree::ParseTree *tree = parser.program();*/
     calcParser::LineContext *tree = parser.line();
     auto *visitor = new calcBaseVisitor();
-    visitor->visitLine(tree);
-    cout << endl << "Parse tree (List format):" << endl;
-    cout << tree->toStringTree(&parser) << endl;
+
+    ASTnode* root = visitor->visitLine(tree);
+
+    PostFixVisitor pfv;
+    BinaryASTnode *bnode;
+    TernaryASTnode *tnode;
+    IntLitASTnode *inode;
+
+    std::cout << "Postfix Form: " << std::endl;
+
+    bnode = dynamic_cast<BinaryASTnode *>(root);
+    if (bnode != NULL)
+        pfv.visit(*bnode);
+
+    tnode = dynamic_cast<TernaryASTnode *>(root);
+    if (tnode != NULL)
+        pfv.visit(*tnode);
+
+    inode = dynamic_cast<IntLitASTnode *>(root);
+    if (inode != NULL)
+        pfv.visit(*inode);
+
+    std::cout <<  std::endl;
     return 0;
 }

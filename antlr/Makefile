@@ -1,9 +1,10 @@
 ANTLR4=java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.Tool
+GRAMMAR=calc
 
-antlr:	calc.g4
-		$(ANTLR4) -Dlanguage=Cpp -no-listener -visitor calc.g4
+antlr:	$(GRAMMAR).g4
+		$(ANTLR4) -Dlanguage=Cpp -no-listener -visitor $(GRAMMAR).g4
+		g++ main.cpp -o $(GRAMMAR) -I/usr/local/include/antlr4-runtime -lantlr4-runtime
 
 clean:	
-		rm -f *.java *.class *.tokens *.interp	
+	    rm -f $(GRAMMAR)BaseVisitor* $(GRAMMAR)*.interp $(GRAMMAR)Lexer* $(GRAMMAR)Parser* $(GRAMMAR)Visitor* $(GRAMMAR)*.tokens
 
-#g++ main.cpp -o test -I/usr/local/include/antlr4-runtime -lantlr4-runtime

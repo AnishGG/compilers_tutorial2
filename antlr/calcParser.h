@@ -12,8 +12,8 @@
 class  calcParser : public antlr4::Parser {
 public:
   enum {
-    WS = 1, OPEN_PARAN = 2, CLOSE_PARAN = 3, PLUS = 4, SUB = 5, MUL = 6, 
-    DIV = 7, QUES = 8, COLON = 9, INT_LITERAL = 10, SEMICOLON = 11
+    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
+    WS = 8, OPEN_PARAN = 9, CLOSE_PARAN = 10, INT_LITERAL = 11
   };
 
   enum {
@@ -37,10 +37,7 @@ public:
   public:
     LineContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<ExprContext *> expr();
-    ExprContext* expr(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> SEMICOLON();
-    antlr4::tree::TerminalNode* SEMICOLON(size_t i);
+    ExprContext *expr();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -51,19 +48,17 @@ public:
 
   class  ExprContext : public antlr4::ParserRuleContext {
   public:
+    calcParser::ExprContext *left = nullptr;;
+    calcParser::ExprContext *middle = nullptr;;
+    antlr4::Token *op = nullptr;;
+    calcParser::ExprContext *right = nullptr;;
     ExprContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *OPEN_PARAN();
+    antlr4::tree::TerminalNode *CLOSE_PARAN();
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
-    antlr4::tree::TerminalNode *CLOSE_PARAN();
     antlr4::tree::TerminalNode *INT_LITERAL();
-    antlr4::tree::TerminalNode *PLUS();
-    antlr4::tree::TerminalNode *SUB();
-    antlr4::tree::TerminalNode *MUL();
-    antlr4::tree::TerminalNode *DIV();
-    antlr4::tree::TerminalNode *QUES();
-    antlr4::tree::TerminalNode *COLON();
 
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

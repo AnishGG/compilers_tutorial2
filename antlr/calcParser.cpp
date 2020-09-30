@@ -37,20 +37,8 @@ calcParser::LineContext::LineContext(ParserRuleContext *parent, size_t invokingS
   : ParserRuleContext(parent, invokingState) {
 }
 
-std::vector<calcParser::ExprContext *> calcParser::LineContext::expr() {
-  return getRuleContexts<calcParser::ExprContext>();
-}
-
-calcParser::ExprContext* calcParser::LineContext::expr(size_t i) {
-  return getRuleContext<calcParser::ExprContext>(i);
-}
-
-std::vector<tree::TerminalNode *> calcParser::LineContext::SEMICOLON() {
-  return getTokens(calcParser::SEMICOLON);
-}
-
-tree::TerminalNode* calcParser::LineContext::SEMICOLON(size_t i) {
-  return getToken(calcParser::SEMICOLON, i);
+calcParser::ExprContext* calcParser::LineContext::expr() {
+  return getRuleContext<calcParser::ExprContext>(0);
 }
 
 
@@ -69,27 +57,16 @@ antlrcpp::Any calcParser::LineContext::accept(tree::ParseTreeVisitor *visitor) {
 calcParser::LineContext* calcParser::line() {
   LineContext *_localctx = _tracker.createInstance<LineContext>(_ctx, getState());
   enterRule(_localctx, 0, calcParser::RuleLine);
-  size_t _la = 0;
 
   auto onExit = finally([=] {
     exitRule();
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(7); 
-    _errHandler->sync(this);
-    _la = _input->LA(1);
-    do {
-      setState(4);
-      expr(0);
-      setState(5);
-      match(calcParser::SEMICOLON);
-      setState(9); 
-      _errHandler->sync(this);
-      _la = _input->LA(1);
-    } while (_la == calcParser::OPEN_PARAN
-
-    || _la == calcParser::INT_LITERAL);
+    setState(4);
+    expr(0);
+    setState(5);
+    match(calcParser::T__0);
    
   }
   catch (RecognitionException &e) {
@@ -111,6 +88,10 @@ tree::TerminalNode* calcParser::ExprContext::OPEN_PARAN() {
   return getToken(calcParser::OPEN_PARAN, 0);
 }
 
+tree::TerminalNode* calcParser::ExprContext::CLOSE_PARAN() {
+  return getToken(calcParser::CLOSE_PARAN, 0);
+}
+
 std::vector<calcParser::ExprContext *> calcParser::ExprContext::expr() {
   return getRuleContexts<calcParser::ExprContext>();
 }
@@ -119,36 +100,8 @@ calcParser::ExprContext* calcParser::ExprContext::expr(size_t i) {
   return getRuleContext<calcParser::ExprContext>(i);
 }
 
-tree::TerminalNode* calcParser::ExprContext::CLOSE_PARAN() {
-  return getToken(calcParser::CLOSE_PARAN, 0);
-}
-
 tree::TerminalNode* calcParser::ExprContext::INT_LITERAL() {
   return getToken(calcParser::INT_LITERAL, 0);
-}
-
-tree::TerminalNode* calcParser::ExprContext::PLUS() {
-  return getToken(calcParser::PLUS, 0);
-}
-
-tree::TerminalNode* calcParser::ExprContext::SUB() {
-  return getToken(calcParser::SUB, 0);
-}
-
-tree::TerminalNode* calcParser::ExprContext::MUL() {
-  return getToken(calcParser::MUL, 0);
-}
-
-tree::TerminalNode* calcParser::ExprContext::DIV() {
-  return getToken(calcParser::DIV, 0);
-}
-
-tree::TerminalNode* calcParser::ExprContext::QUES() {
-  return getToken(calcParser::QUES, 0);
-}
-
-tree::TerminalNode* calcParser::ExprContext::COLON() {
-  return getToken(calcParser::COLON, 0);
 }
 
 
@@ -178,7 +131,7 @@ calcParser::ExprContext* calcParser::expr(int precedence) {
   size_t startState = 2;
   enterRecursionRule(_localctx, 2, calcParser::RuleExpr, precedence);
 
-    
+    size_t _la = 0;
 
   auto onExit = finally([=] {
     unrollRecursionContexts(parentContext);
@@ -186,21 +139,21 @@ calcParser::ExprContext* calcParser::expr(int precedence) {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(17);
+    setState(13);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case calcParser::OPEN_PARAN: {
-        setState(12);
+        setState(8);
         match(calcParser::OPEN_PARAN);
-        setState(13);
-        expr(0);
-        setState(14);
+        setState(9);
+        dynamic_cast<ExprContext *>(_localctx)->middle = expr(0);
+        setState(10);
         match(calcParser::CLOSE_PARAN);
         break;
       }
 
       case calcParser::INT_LITERAL: {
-        setState(16);
+        setState(12);
         match(calcParser::INT_LITERAL);
         break;
       }
@@ -209,91 +162,88 @@ calcParser::ExprContext* calcParser::expr(int precedence) {
       throw NoViableAltException(this);
     }
     _ctx->stop = _input->LT(-1);
-    setState(39);
+    setState(29);
     _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx);
+    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 2, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         if (!_parseListeners.empty())
           triggerExitRuleEvent();
         previousContext = _localctx;
-        setState(37);
+        setState(27);
         _errHandler->sync(this);
-        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 2, _ctx)) {
+        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 1, _ctx)) {
         case 1: {
           _localctx = _tracker.createInstance<ExprContext>(parentContext, parentState);
+          _localctx->left = previousContext;
           pushNewRecursionContext(_localctx, startState, RuleExpr);
-          setState(19);
+          setState(15);
 
-          if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
-          setState(20);
-          match(calcParser::PLUS);
-          setState(21);
-          expr(7);
+          if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
+          setState(16);
+          dynamic_cast<ExprContext *>(_localctx)->op = _input->LT(1);
+          _la = _input->LA(1);
+          if (!(_la == calcParser::T__1
+
+          || _la == calcParser::T__2)) {
+            dynamic_cast<ExprContext *>(_localctx)->op = _errHandler->recoverInline(this);
+          }
+          else {
+            _errHandler->reportMatch(this);
+            consume();
+          }
+          setState(17);
+          dynamic_cast<ExprContext *>(_localctx)->right = expr(5);
           break;
         }
 
         case 2: {
           _localctx = _tracker.createInstance<ExprContext>(parentContext, parentState);
+          _localctx->left = previousContext;
           pushNewRecursionContext(_localctx, startState, RuleExpr);
-          setState(22);
+          setState(18);
 
-          if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
-          setState(23);
-          match(calcParser::SUB);
-          setState(24);
-          expr(6);
+          if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
+          setState(19);
+          dynamic_cast<ExprContext *>(_localctx)->op = _input->LT(1);
+          _la = _input->LA(1);
+          if (!(_la == calcParser::T__3
+
+          || _la == calcParser::T__4)) {
+            dynamic_cast<ExprContext *>(_localctx)->op = _errHandler->recoverInline(this);
+          }
+          else {
+            _errHandler->reportMatch(this);
+            consume();
+          }
+          setState(20);
+          dynamic_cast<ExprContext *>(_localctx)->right = expr(4);
           break;
         }
 
         case 3: {
           _localctx = _tracker.createInstance<ExprContext>(parentContext, parentState);
+          _localctx->left = previousContext;
           pushNewRecursionContext(_localctx, startState, RuleExpr);
-          setState(25);
-
-          if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
-          setState(26);
-          match(calcParser::MUL);
-          setState(27);
-          expr(5);
-          break;
-        }
-
-        case 4: {
-          _localctx = _tracker.createInstance<ExprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleExpr);
-          setState(28);
-
-          if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
-          setState(29);
-          match(calcParser::DIV);
-          setState(30);
-          expr(4);
-          break;
-        }
-
-        case 5: {
-          _localctx = _tracker.createInstance<ExprContext>(parentContext, parentState);
-          pushNewRecursionContext(_localctx, startState, RuleExpr);
-          setState(31);
+          setState(21);
 
           if (!(precpred(_ctx, 2))) throw FailedPredicateException(this, "precpred(_ctx, 2)");
-          setState(32);
-          match(calcParser::QUES);
-          setState(33);
-          expr(0);
-          setState(34);
-          match(calcParser::COLON);
-          setState(35);
-          expr(3);
+          setState(22);
+          dynamic_cast<ExprContext *>(_localctx)->op = match(calcParser::T__5);
+          setState(23);
+          dynamic_cast<ExprContext *>(_localctx)->middle = expr(0);
+          setState(24);
+          match(calcParser::T__6);
+          setState(25);
+          dynamic_cast<ExprContext *>(_localctx)->right = expr(3);
           break;
         }
 
         } 
       }
-      setState(41);
+      setState(31);
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 3, _ctx);
+      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 2, _ctx);
     }
   }
   catch (RecognitionException &e) {
@@ -316,11 +266,9 @@ bool calcParser::sempred(RuleContext *context, size_t ruleIndex, size_t predicat
 
 bool calcParser::exprSempred(ExprContext *_localctx, size_t predicateIndex) {
   switch (predicateIndex) {
-    case 0: return precpred(_ctx, 6);
-    case 1: return precpred(_ctx, 5);
-    case 2: return precpred(_ctx, 4);
-    case 3: return precpred(_ctx, 3);
-    case 4: return precpred(_ctx, 2);
+    case 0: return precpred(_ctx, 4);
+    case 1: return precpred(_ctx, 3);
+    case 2: return precpred(_ctx, 2);
 
   default:
     break;
@@ -341,12 +289,11 @@ std::vector<std::string> calcParser::_ruleNames = {
 };
 
 std::vector<std::string> calcParser::_literalNames = {
-  "", "", "'('", "')'", "'+'", "'-'", "'*'", "'/'", "'?'", "':'", "", "';'"
+  "", "';'", "'+'", "'-'", "'*'", "'/'", "'?'", "':'", "", "'('", "')'"
 };
 
 std::vector<std::string> calcParser::_symbolicNames = {
-  "", "WS", "OPEN_PARAN", "CLOSE_PARAN", "PLUS", "SUB", "MUL", "DIV", "QUES", 
-  "COLON", "INT_LITERAL", "SEMICOLON"
+  "", "", "", "", "", "", "", "", "WS", "OPEN_PARAN", "CLOSE_PARAN", "INT_LITERAL"
 };
 
 dfa::Vocabulary calcParser::_vocabulary(_literalNames, _symbolicNames);
@@ -369,36 +316,28 @@ calcParser::Initializer::Initializer() {
 
   _serializedATN = {
     0x3, 0x608b, 0xa72a, 0x8133, 0xb9ed, 0x417c, 0x3be7, 0x7786, 0x5964, 
-    0x3, 0xd, 0x2d, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x3, 0x2, 0x3, 
-    0x2, 0x3, 0x2, 0x6, 0x2, 0xa, 0xa, 0x2, 0xd, 0x2, 0xe, 0x2, 0xb, 0x3, 
-    0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x5, 0x3, 0x14, 
-    0xa, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 
+    0x3, 0xd, 0x23, 0x4, 0x2, 0x9, 0x2, 0x4, 0x3, 0x9, 0x3, 0x3, 0x2, 0x3, 
+    0x2, 0x3, 0x2, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 
+    0x3, 0x5, 0x3, 0x10, 0xa, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 
     0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 
-    0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x3, 0x7, 0x3, 0x28, 0xa, 
-    0x3, 0xc, 0x3, 0xe, 0x3, 0x2b, 0xb, 0x3, 0x3, 0x3, 0x2, 0x3, 0x4, 0x4, 
-    0x2, 0x4, 0x2, 0x2, 0x2, 0x31, 0x2, 0x9, 0x3, 0x2, 0x2, 0x2, 0x4, 0x13, 
-    0x3, 0x2, 0x2, 0x2, 0x6, 0x7, 0x5, 0x4, 0x3, 0x2, 0x7, 0x8, 0x7, 0xd, 
-    0x2, 0x2, 0x8, 0xa, 0x3, 0x2, 0x2, 0x2, 0x9, 0x6, 0x3, 0x2, 0x2, 0x2, 
-    0xa, 0xb, 0x3, 0x2, 0x2, 0x2, 0xb, 0x9, 0x3, 0x2, 0x2, 0x2, 0xb, 0xc, 
-    0x3, 0x2, 0x2, 0x2, 0xc, 0x3, 0x3, 0x2, 0x2, 0x2, 0xd, 0xe, 0x8, 0x3, 
-    0x1, 0x2, 0xe, 0xf, 0x7, 0x4, 0x2, 0x2, 0xf, 0x10, 0x5, 0x4, 0x3, 0x2, 
-    0x10, 0x11, 0x7, 0x5, 0x2, 0x2, 0x11, 0x14, 0x3, 0x2, 0x2, 0x2, 0x12, 
-    0x14, 0x7, 0xc, 0x2, 0x2, 0x13, 0xd, 0x3, 0x2, 0x2, 0x2, 0x13, 0x12, 
-    0x3, 0x2, 0x2, 0x2, 0x14, 0x29, 0x3, 0x2, 0x2, 0x2, 0x15, 0x16, 0xc, 
-    0x8, 0x2, 0x2, 0x16, 0x17, 0x7, 0x6, 0x2, 0x2, 0x17, 0x28, 0x5, 0x4, 
-    0x3, 0x9, 0x18, 0x19, 0xc, 0x7, 0x2, 0x2, 0x19, 0x1a, 0x7, 0x7, 0x2, 
-    0x2, 0x1a, 0x28, 0x5, 0x4, 0x3, 0x8, 0x1b, 0x1c, 0xc, 0x6, 0x2, 0x2, 
-    0x1c, 0x1d, 0x7, 0x8, 0x2, 0x2, 0x1d, 0x28, 0x5, 0x4, 0x3, 0x7, 0x1e, 
-    0x1f, 0xc, 0x5, 0x2, 0x2, 0x1f, 0x20, 0x7, 0x9, 0x2, 0x2, 0x20, 0x28, 
-    0x5, 0x4, 0x3, 0x6, 0x21, 0x22, 0xc, 0x4, 0x2, 0x2, 0x22, 0x23, 0x7, 
-    0xa, 0x2, 0x2, 0x23, 0x24, 0x5, 0x4, 0x3, 0x2, 0x24, 0x25, 0x7, 0xb, 
-    0x2, 0x2, 0x25, 0x26, 0x5, 0x4, 0x3, 0x5, 0x26, 0x28, 0x3, 0x2, 0x2, 
-    0x2, 0x27, 0x15, 0x3, 0x2, 0x2, 0x2, 0x27, 0x18, 0x3, 0x2, 0x2, 0x2, 
-    0x27, 0x1b, 0x3, 0x2, 0x2, 0x2, 0x27, 0x1e, 0x3, 0x2, 0x2, 0x2, 0x27, 
-    0x21, 0x3, 0x2, 0x2, 0x2, 0x28, 0x2b, 0x3, 0x2, 0x2, 0x2, 0x29, 0x27, 
-    0x3, 0x2, 0x2, 0x2, 0x29, 0x2a, 0x3, 0x2, 0x2, 0x2, 0x2a, 0x5, 0x3, 
-    0x2, 0x2, 0x2, 0x2b, 0x29, 0x3, 0x2, 0x2, 0x2, 0x6, 0xb, 0x13, 0x27, 
-    0x29, 
+    0x3, 0x3, 0x7, 0x3, 0x1e, 0xa, 0x3, 0xc, 0x3, 0xe, 0x3, 0x21, 0xb, 0x3, 
+    0x3, 0x3, 0x2, 0x3, 0x4, 0x4, 0x2, 0x4, 0x2, 0x4, 0x3, 0x2, 0x4, 0x5, 
+    0x3, 0x2, 0x6, 0x7, 0x2, 0x24, 0x2, 0x6, 0x3, 0x2, 0x2, 0x2, 0x4, 0xf, 
+    0x3, 0x2, 0x2, 0x2, 0x6, 0x7, 0x5, 0x4, 0x3, 0x2, 0x7, 0x8, 0x7, 0x3, 
+    0x2, 0x2, 0x8, 0x3, 0x3, 0x2, 0x2, 0x2, 0x9, 0xa, 0x8, 0x3, 0x1, 0x2, 
+    0xa, 0xb, 0x7, 0xb, 0x2, 0x2, 0xb, 0xc, 0x5, 0x4, 0x3, 0x2, 0xc, 0xd, 
+    0x7, 0xc, 0x2, 0x2, 0xd, 0x10, 0x3, 0x2, 0x2, 0x2, 0xe, 0x10, 0x7, 0xd, 
+    0x2, 0x2, 0xf, 0x9, 0x3, 0x2, 0x2, 0x2, 0xf, 0xe, 0x3, 0x2, 0x2, 0x2, 
+    0x10, 0x1f, 0x3, 0x2, 0x2, 0x2, 0x11, 0x12, 0xc, 0x6, 0x2, 0x2, 0x12, 
+    0x13, 0x9, 0x2, 0x2, 0x2, 0x13, 0x1e, 0x5, 0x4, 0x3, 0x7, 0x14, 0x15, 
+    0xc, 0x5, 0x2, 0x2, 0x15, 0x16, 0x9, 0x3, 0x2, 0x2, 0x16, 0x1e, 0x5, 
+    0x4, 0x3, 0x6, 0x17, 0x18, 0xc, 0x4, 0x2, 0x2, 0x18, 0x19, 0x7, 0x8, 
+    0x2, 0x2, 0x19, 0x1a, 0x5, 0x4, 0x3, 0x2, 0x1a, 0x1b, 0x7, 0x9, 0x2, 
+    0x2, 0x1b, 0x1c, 0x5, 0x4, 0x3, 0x5, 0x1c, 0x1e, 0x3, 0x2, 0x2, 0x2, 
+    0x1d, 0x11, 0x3, 0x2, 0x2, 0x2, 0x1d, 0x14, 0x3, 0x2, 0x2, 0x2, 0x1d, 
+    0x17, 0x3, 0x2, 0x2, 0x2, 0x1e, 0x21, 0x3, 0x2, 0x2, 0x2, 0x1f, 0x1d, 
+    0x3, 0x2, 0x2, 0x2, 0x1f, 0x20, 0x3, 0x2, 0x2, 0x2, 0x20, 0x5, 0x3, 
+    0x2, 0x2, 0x2, 0x21, 0x1f, 0x3, 0x2, 0x2, 0x2, 0x5, 0xf, 0x1d, 0x1f, 
   };
 
   atn::ATNDeserializer deserializer;
